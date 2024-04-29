@@ -171,18 +171,21 @@ You can then start using it:
 
 ```tsx
 import dynamic from 'next/dynamic'
-import { LucideProps } from 'lucide-react';
-import dynamicIconImports from 'lucide-react/dynamicIconImports';
+import { memo } from 'react';
+import Lucide from 'lucide-react';
 
-interface IconProps extends LucideProps {
-  name: keyof typeof dynamicIconImports;
+export type IconName = keyof typeof Lucide.icons;
+
+interface IconProps extends Lucide.LucideProps {
+  name: IconNames;
 }
 
-const Icon = ({ name, ...props }: IconProps) => {
-  const LucideIcon = dynamic(dynamicIconImports[name])
+const Icon = memo({ name, ...props }: IconProps) => {
+  const LucideIcon = dynamic(()=>import('lucide-react').them((mod)=>mod[name)
 
   return <LucideIcon {...props} />;
 };
 
 export default Icon;
 ```
+
